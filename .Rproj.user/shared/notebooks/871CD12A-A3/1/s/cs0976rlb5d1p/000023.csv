@@ -1,0 +1,4 @@
+"0","# All plot lines/axes drawn in gray."
+"0","# Adds bottom (1), left (2), and right (4) axes with custom tick marks."
+"0",""
+"0","box(bty=""u"")"

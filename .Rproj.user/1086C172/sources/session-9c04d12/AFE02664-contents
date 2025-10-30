@@ -1,0 +1,188 @@
+---
+title: "Assignment 4"
+author: "Jing Tao"
+date: "Oct.15"
+format: html
+---
+
+```{r}
+#install.packages("quarto")
+
+# Charts #1–#4  |  Alternative robust version (no tidytext)
+
+suppressPackageStartupMessages({
+  library(readr); library(dplyr); library(tidyr)
+  library(ggplot2); library(scales); library(lubridate)
+  library(stringr); library(forcats)
+})
+options(scipen = 999)
+
+# ---------- 0) Load & clean ----------
+csv_path <- "/Users/jingtao/Desktop/FALL 2025/DATA VISUALIZATION/Jing Tao/owid-covid-data.csv"   
+owid <- read_csv(csv_path, show_col_types = FALSE)
+ 
+need <- c("continent","location","date","population","total_cases","gdp_per_capita")
+stopifnot(all(need %in% names(owid)))
+
+latest <- owid %>%
+  select(all_of(need)) %>%
+  filter(!is.na(continent), !is.na(population), population > 0) %>%
+  mutate(date_clean = ymd(str_sub(as.character(date), 1, 10), quiet = TRUE)) %>%
+  filter(!is.na(date_clean)) %>%
+  group_by(location) %>%
+  slice_max(order_by = date_clean, n = 1, with_ties = FALSE) %>%
+  ungroup()
+
+df <- latest %>%
+  transmute(
+    Continent  = continent,
+    Country    = location,
+    Population = as.numeric(population) / 1e6,   # 百万人
+    Cases      = as.numeric(total_cases),
+    GDP        = as.numeric(gdp_per_capita)
+  )
+
+if (!dir.exists("outputs")) dir.create("outputs", recursive = TRUE)
+stamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+save_png <- function(p, name, w=12, h=7, dpi=300){
+  fn <- file.path("outputs", paste0(name, "_", stamp, ".png"))
+  ggsave(fn, p, width=w, height=h, dpi=dpi); message("Saved: ", fn)
+}
+
+# Chart 1 — Variable Width Column
+wrap_cont <- function(x) gsub(" ", "\n", x)
+
+mekko <- df %>%
+  group_by(Continent) %>%
+  summarise(
+    pop_sum = sum(Population, na.rm = TRUE),
+    cases_median = median(Cases, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(Continent) %>%
+  mutate(
+    width_share = pop_sum / sum(pop_sum),
+    xmin = lag(cumsum(width_share), default = 0),
+    xmax = cumsum(width_share),
+    xmid = (xmin + xmax) / 2,
+    Cont_lbl = wrap_cont(Continent)
+  )
+
+p1 <- ggplot(mekko) +
+  geom_rect(aes(xmin=xmin, xmax=xmax, ymin=0, ymax=cases_median, fill=Continent),
+            color="white") +
+  scale_x_continuous(breaks=mekko$xmid, labels=mekko$Cont_lbl, expand=c(0.02,0)) +
+  scale_y_continuous(labels=label_comma()) +
+  labs(
+    title="Chart 1 — Variable Width Column Chart",
+    subtitle="Width = population share (millions); Height = median total cases (latest per country)",
+    x="Continent (bar width ∝ population share)", y="Median Total Cases"
+  ) +
+  theme_minimal(base_size=13) +
+  theme(legend.position="none", plot.title=element_text(face="bold"))
+print(p1)
+save_png(p1, "A4_chart1_mekko")
+
+```
+
+```{r}
+
+# Chart 2 — Table with Embedded Charts
+
+top6_tbl <- df %>%
+  slice_max(order_by = Cases, n = 6, with_ties = FALSE) %>%
+  select(Country, Population, GDP)
+
+long2 <- top6_tbl %>%
+  pivot_longer(c(Population, GDP), names_to = "Metric", values_to = "Value") %>%
+  group_by(Metric) %>%
+  mutate(Value_scaled = Value / max(Value, na.rm = TRUE)) %>%
+  ungroup()
+
+p2 <- ggplot(long2, aes(x = 1, y = Value_scaled)) +
+  geom_col(width = 0.6, fill = "#6baed6") +
+  facet_grid(rows = vars(Country), cols = vars(Metric), switch = "y") +
+  coord_cartesian(ylim = c(0,1)) +
+  labs(
+    title="Chart 2 — Table with Embedded Charts (ggplot-only)",
+    subtitle="Rows = Top-6 by Cases; Columns = Population (M) & GDP per capita (scaled within column)",
+    x=NULL, y=NULL
+  ) +
+  theme_minimal(base_size=13) +
+  theme(
+    axis.text=element_blank(), axis.ticks=element_blank(), panel.grid=element_blank(),
+    strip.placement="outside",
+    strip.background=element_rect(fill="grey95", color=NA),
+    panel.border=element_rect(color="grey70", fill=NA, linewidth=0.5),
+    plot.title=element_text(face="bold"),
+    plot.margin=margin(10,10,10,16)
+  )
+print(p2)
+save_png(p2, "A4_chart2_table_embedded")
+```
+
+```{r}
+# Chart 3 — Horizontal Bar (Many items, Few categories)
+
+df3 <- df %>%
+  group_by(Continent) %>%
+  slice_max(order_by = Cases, n = 8, with_ties = FALSE) %>%
+  ungroup() %>%
+  mutate(
+    y_comb = paste(Continent, Country, sep = " | ")
+  ) %>%
+  group_by(Continent) %>%
+  arrange(Cases, .by_group = TRUE) %>%
+  mutate(
+    # 在各洲内部设置因子顺序（从小到大，条形从下到上）
+    y_comb = factor(y_comb, levels = unique(y_comb))
+  ) %>%
+  ungroup()
+
+# 只显示国家名的 labeller
+only_country <- function(x) sub("^.*\\|\\s*", "", x)
+
+p3 <- ggplot(df3, aes(x = Cases, y = y_comb)) +
+  geom_col(fill = "#74c476") +
+  facet_wrap(~ Continent, nrow = 1, scales = "free_y") +
+  scale_y_discrete(labels = only_country) +
+  scale_x_continuous(labels = label_comma()) +
+  labs(
+    title = "Chart 3 — Horizontal Bar Chart (Many Items, Few Categories)",
+    subtitle = "Top 8 countries by total cases within each continent (latest per country)",
+    x = "Total Cases", y = "Country"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold"))
+print(p3)
+save_png(p3, "A4_chart3_bar_faceted")
+```
+
+```{r}
+# --------------------------------------------------------------
+# Chart 4 — Column Chart (Few items)
+# --------------------------------------------------------------
+agg4 <- df %>%
+  group_by(Continent) %>%
+  summarise(median_gdp_pc = median(GDP, na.rm = TRUE), .groups = "drop")
+
+p4 <- ggplot(agg4, aes(x = Continent, y = median_gdp_pc, fill = Continent)) +
+  geom_col() +
+  scale_y_continuous(labels = label_comma()) +
+  labs(
+    title="Chart 4 — Column Chart",
+    subtitle="Median GDP per capita by continent",
+    x="Continent", y="Median GDP per capita (USD)"
+  ) +
+  theme_minimal(base_size=13) +
+  theme(legend.position="none", plot.title=element_text(face="bold"))
+print(p4)
+save_png(p4, "A4_chart4_column")
+
+dir.create("images", showWarnings = FALSE)
+save_png <- function(p, name, width = 1600, height = 1000, dpi = 150) {
+  ggplot2::ggsave(filename = file.path("images", paste0(name, ".png")),
+                  plot = p, width = width/96, height = height/96, dpi = dpi)
+}
+
+```

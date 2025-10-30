@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: Jing-Tao
+  
+website:
+  title: "Jing Tao"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: A1.qmd
+        text: Assignment 1
+      - href: A2.qmd
+        text: Assignment 2
+      - href: A3.qmd
+        text: Assignment 3
+      - href: A4.qmd
+        text: Assignment 4
+
+format:
+  html:
+    theme: default
+    toc: true
+
+

@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "assignment1.html",
+    "href": "assignment1.html",
+    "title": "Assignment 1",
+    "section": "",
+    "text": "Sep. 24, 2025\n\nRevisit Anscombe’s examples (anscombe01.R on Teams)\n\n\nRead: Anscombe, Francis J. 1973.”Graphs in statistical analysis.” The American\n\nStatistician 27, no. 1: 17-21.\n\nWrite one paragraph to analyze and suggest solutions.\n\n\nAnscombe’s quartet demonstrates that four datasets can yield nearly identical descriptive statistics and regression results, yet display very different patterns when visualized. In the first case, the relationship appears approximately linear, making an ordinary least squares model appropriate. In the second case, the data follow a clear curve, suggesting the need for polynomial terms or nonparametric approaches such as splines. In the third case, the regression line is driven largely by a single influential observation, indicating the importance of conducting diagnostic checks for leverage and influence (e.g., Cook’s distance) and potentially applying robust estimation techniques. In the fourth case, the overall fit is distorted by a single extreme outlier on the x-axis, underscoring the necessity of influence diagnostics, robust regression, or justified exclusion of the outlier. The broader implication is that researchers should always supplement numerical summaries with graphical analysis, evaluate model assumptions carefully, and adapt modeling strategies to the actual data structure rather than relying solely on conventional statistical outputs.\n\nRun Fall.R (on Teams)\n\n\nGive your own colors (e.g. Winter).\n\n\n\nExport the file and post on your GitHub website.\n\n\nWrite a critique on a chart in published work (book/article/news website)\n\n(Hint: Learn from Nathan Yau’s example discussed in class). Post on your website.\n\nA graph of a diagram\n\nThe box plot in Figure 3 of bodistianu, Gaozhao, and Zhang (2025) clearly shows the distribution of individual accuracy rates among the four treatment groups. However, as Nathan Yau emphasized, the validity of the chart depends not only on correctness, but also on clarity and accessibility.\nFirstly, the design choice of excluding external values (” outliers “) reduces transparency. Outliers can provide important insights into whether some extreme behaviors occur in treatment, which is crucial in behavioral research. By omitting them, the chart hides potential variations and presents a clearer but less informative image.\nSecond, the axis markings are somewhat blurry. The Y-axis shows the “accuracy distribution”, but the box plot has already encoded the distribution through quartiles. A clearer label, such as “Personal Accuracy Rate (0-1)”, will reduce ambiguity. Similarly, adding a sample size under each box can help readers assess whether the differences in dissemination are caused by unequal group sizes.\nThirdly, the descriptions in the title and the main text explain the results of statistical tests (for example, Mann-Whitney test comparisons), but the numbers do not directly indicate significance. Readers must rely on the text rather than the visuals themselves. Marking P-values or significant difference markers on the chart can more effectively integrate evidence into the chart.\nFinally, the choice of color (a uniform gray-blue box) does not guide attention. Using consistent but slightly different colors (for example, the gradient between fact-checked treatments and non-fact-checked treatments) will enhance the experimental design and help the audience quickly see the key contrasts between the conditions.\nIn conclusion, although the chart is statistically correct, its communication can be improved by showing outliers, clarifying labels, marking significant differences, and strategically using colors. These improvements will better conform to the principle of making a hill into a hill, that is, data graphs should not only display numbers but also tell the story carried by the data."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Jing Tao",
+    "section": "",
+    "text": "This is Jing Tao’s website for EPPS 6356: Data Visualization"
+  }
+]

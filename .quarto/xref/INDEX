@@ -1,0 +1,23 @@
+{
+  "index.qmd": {
+    "index.html": "7c9f4315"
+  },
+  "about.qmd": {
+    "about.html": "49d426e8"
+  },
+  "assignment1.qmd": {
+    "assignment1.html": "5378fb32"
+  },
+  "A2.qmd": {
+    "A2.html": "c297bbe2"
+  },
+  "A3.qmd": {
+    "A3.html": "871d657b"
+  },
+  "A4.qmd": {
+    "A4.html": "dff487e3"
+  },
+  "A3.knit.md": {
+    "A3.knit.html": "88ac6cfd"
+  }
+}

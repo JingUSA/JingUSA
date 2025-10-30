@@ -1,0 +1,4 @@
+"0","# box(bty=""u""): draws a U-shaped frame (bottom + left + right, no top border)."
+"0","# mtext(): adds axis labels outside the plot margins."
+"0",""
+"0","text(4, 5, ""Bird 131"")"

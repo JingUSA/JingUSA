@@ -1,0 +1,5 @@
+"0","# y1 points: solid black circles (pch=16)."
+"0","# y2 points: open circles with white fill (pch=21, bg=""white"")."
+"0","# cex=2 makes them larger than default."
+"0",""
+"0","par(col=""gray50"", fg=""gray50"", col.axis=""gray50"")"

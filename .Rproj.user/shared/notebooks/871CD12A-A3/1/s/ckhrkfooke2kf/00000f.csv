@@ -1,0 +1,7 @@
+"0","col1 <- ""#355C7D""; col2 <- ""#F67280""; grid_col <- ""#99B898"""
+"0",""
+"0","op <- par(no.readonly = TRUE)"
+"0","par(family = ""serif"", las = 1, mar = c(4,4,2,4), cex = 0.9,"
+"0","    col.axis = ""gray30"", col.lab = ""gray10"", fg = ""gray30"")"
+"0",""
+"0","plot.new()"
