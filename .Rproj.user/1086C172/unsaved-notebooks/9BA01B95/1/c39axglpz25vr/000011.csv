@@ -1,0 +1,8 @@
+"0",""
+"0","mtext("
+"0","sub("" "", ""\n"", colnames(VADeaths)),"
+"0","at   = midpts,"
+"0","side = 1,"
+"0","line = 0.5,"
+"0","cex  = 0.5"
+"0",")"

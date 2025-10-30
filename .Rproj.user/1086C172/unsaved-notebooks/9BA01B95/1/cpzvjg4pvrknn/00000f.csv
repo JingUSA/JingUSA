@@ -1,0 +1,6 @@
+"0","plot("
+"0","x_le, y_hpi,"
+"0","pch  = 16,"
+"0","xlab = ""Life expectancy"","
+"0","ylab = ""HPI score"""
+"0",")"

@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: Jing-Tao
+  output-dir: datavis
   
 website:
   title: "Jing Tao"
@@ -10,6 +10,8 @@ website:
         text: Home
       - href: assignment1.qmd
         text: Assignment 1
+      - href: A2.qmd
+        text: Assignment 2
       - href: A3.qmd
         text: Assignment 3
       - href: A4.qmd

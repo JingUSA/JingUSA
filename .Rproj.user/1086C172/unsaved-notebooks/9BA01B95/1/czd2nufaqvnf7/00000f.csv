@@ -1,0 +1,7 @@
+"0","par(las = 1, mar = c(4, 4, 1.5, 1))"
+"0","plot("
+"0","x_le, y_hpi,"
+"0","pch  = 16,"
+"0","xlab = ""Life expectancy (years)"","
+"0","ylab = ""HPI score"""
+"0",")"
