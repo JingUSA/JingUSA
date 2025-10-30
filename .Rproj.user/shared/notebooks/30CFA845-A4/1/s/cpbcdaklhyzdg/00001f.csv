@@ -1,0 +1,7 @@
+"0",""
+"0","dir.create(""images"", showWarnings = FALSE)"
+"0","save_png <- function(p, name, width = 1600, height = 1000, dpi = 150) {"
+"0","  ggplot2::ggsave(filename = file.path(""images"", paste0(name, "".png"")),"
+"0","                  plot = p, width = width/96, height = height/96, dpi = dpi)"
+"0","}"
+"0",""

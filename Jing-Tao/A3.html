@@ -128,12 +128,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./A1.qmd"> 
+    <a class="nav-link" href="./assignment1.html"> 
 <span class="menu-text">Assignment 1</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./A2.qmd"> 
-<span class="menu-text">Assignment 2</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./A3.html" aria-current="page"> 
@@ -907,11 +903,11 @@ Attaching package: 'scales'</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"A3.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
+<pre><code>[1] FALSE</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="fu">c</span>(<span class="st">"."</span>, <span class="st">"_site"</span>, <span class="st">"docs"</span>), <span class="at">pattern =</span> <span class="st">"A3</span><span class="sc">\\</span><span class="st">.html"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "A3.html"      "A3.html"      "docs/A3.html"</code></pre>
+<pre><code>[1] "A3.html"      "docs/A3.html"</code></pre>
 </div>
 </div>
 <div class="cell">
